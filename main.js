@@ -39,15 +39,15 @@ $(document).ready(function() {
     done: function(data, textStatus, jqXHR) {
       console.log('done');
       console.log(data);
-      // Reset fields
-      // $(':input','#action-network-form')
-      //   .not(':button, :submit, :reset, :hidden')
-      //   .val('')
-      //   .prop('checked', false)
-      //   .prop('selected', false);
+      
       $('#success').html('<p class="success">You\'re in!</p>');
       window.open(`https://writetothem.com/who?pc=${$('#action-network-form-post_code').val()}`, 'name');
-
+        // Reset fields
+      $(':input','#action-network-form')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .prop('checked', false)
+        .prop('selected', false);
     },
     fail: function(jqXHR, textStatus, errorThrown) {
       console.log('fail');
