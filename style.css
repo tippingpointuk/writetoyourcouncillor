@@ -1,0 +1,86 @@
+.target:target {
+  display: block; }
+
+.target {
+  display: none;
+  color: #f7eb1f; }
+
+.Chaos-Button {
+  display: inline-block;
+  background-color: #2da8e1;
+  color: black;
+  padding: 2px 10px 2px 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  transition: 0.3s  ease-in-out;
+  font-weight: normal;
+  text-transform: uppercase; }
+  .Chaos-Button:hover {
+    text-decoration: none;
+    background-color: #1b8cc0; }
+  .Chaos-Button:visited {
+    color: black; }
+
+button.Chaos-Button {
+  border: 0;
+  padding-top: 7px;
+  padding-bottom: 5px; }
+
+input[type="submit"], button {
+  all: none;
+  border: 0; }
+
+form {
+  font-family: Arial, Helvetica, sans-serif; }
+  form input, form select {
+    border-style: solid;
+    border-width: 0;
+    border-radius: 0;
+    width: 100%;
+    border-color: #f7eb1f;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgba(255, 255, 255, 0); }
+  form div.input.text {
+    margin: 15px 14px;
+    display: flex;
+    flex-direction: column-reverse; }
+  form input[required] + label::after, form textarea[required] + label::after, form select[required] + label::after {
+    content: " *";
+    color: #2da8e1; }
+  form input[type="checkbox"] {
+    width: auto; }
+  form select {
+    border-width: 2px;
+    padding: 10px;
+    border-radius: 10px; }
+  form input[type="email"], form input[type="text"], form input[type="tel"], form textarea {
+    border-width: 2px;
+    padding: 10px;
+    border-radius: 10px; }
+    form input[type="email"]:focus, form input[type="text"]:focus, form input[type="tel"]:focus, form textarea:focus {
+      border-color: #2da8e1;
+      border-width: 3px;
+      outline-color: #2da8e1; }
+  form textarea {
+    max-width: 100%; }
+    form textarea.expand:focus {
+      height: 40vh; }
+  form fieldset {
+    border: 0;
+    padding: 0; }
+    form fieldset.pair {
+      display: block; }
+      @media screen and (min-width: 400px) {
+        form fieldset.pair {
+          display: flex; }
+          form fieldset.pair .input {
+            max-width: 50%; } }
+      form fieldset.pair .input {
+        max-width: 100%; }
+  form .form-submit-message:target {
+    display: block; }
+  form .form-submit-message {
+    display: none; }

@@ -1,0 +1,129 @@
+// @import "/assets/css/Chaos-style.scss";
+$brand-color: #2da8e1;
+$accent-color: #f7eb1f;
+$accent-text-color:black;
+$brand-text-color: black;
+$spacing-unit: 10px;
+$rounding: 10px;
+$base-font-size: 18px;
+$base-font-stack: Arial,Helvetica,sans-serif;
+$header-font-stack: $base-font-stack;
+$background-color: rgba(255,255,255,0);
+$content-width-narrow: 400px;
+
+
+.target:target{
+  display: block;
+
+}
+.target{
+  display: none;
+  color: $accent-color;
+}
+.Chaos-Button {
+    display: inline-block;
+    background-color: $brand-color;
+    color: $brand-text-color;
+    padding: $spacing-unit * 0.2 $spacing-unit $spacing-unit * 0.2 $spacing-unit;
+    margin: $spacing-unit 0;
+    border-radius: $rounding;
+    font-family: $header-font-stack;
+    font-size: $base-font-size * 1.5;
+    transition:  0.3s  ease-in-out;
+    font-weight: normal;
+    text-transform: uppercase;
+    &:hover {
+        text-decoration: none;
+        background-color: darken($brand-color,10%);
+    }
+    &:visited {
+        color: $accent-text-color;
+    }
+}
+button.Chaos-Button{
+  border: 0;
+  padding-top: $spacing-unit * 0.7;
+  padding-bottom: $spacing-unit * 0.5;
+}
+input[type="submit"], button{
+  all: none;
+  border: 0;
+}
+form {
+  font-family: $base-font-stack;
+  // font-size: $base-font-size * 0.8;
+  input,select{
+    border-style:solid;
+    border-width: 0;
+    border-radius: 0;
+    width: 100%;
+    border-color: $accent-color;
+    font-size: $base-font-size;
+    font-family: $base-font-stack;
+    background-color: $background-color;
+    // background-color: rgba(0,0,0,0);
+  }
+  div.input.text{
+    margin: $spacing-unit*1.5 $spacing-unit * 1.4;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  input[required], textarea[required], select[required] {
+    & + label::after{
+          content: " *";
+          color: $brand-color;
+        }
+  }
+  input[type="checkbox"]{
+    width: auto;
+  }
+  select {
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
+    // appearance: none;       /* Remove default arrow */
+    // background-image: url(...);   /* Add custom arrow */
+    border-width: 2px;
+    padding: $spacing-unit;
+    border-radius: $rounding;
+  }
+  input[type="email"], input[type="text"], input[type="tel"], textarea{
+    border-width: 2px;
+    padding: $spacing-unit;
+    border-radius: $rounding;
+    &:focus{
+      border-color: $brand-color;
+      border-width: 3px;
+      outline-color: $brand-color;
+    }
+  }
+  textarea{
+    max-width: 100%;
+    &.expand:focus{
+      height: 40vh;
+    }
+  }
+  fieldset{
+    border: 0;
+    padding:0;
+    &.pair{
+      @media screen and (min-width: $content-width-narrow) {
+        display: flex;
+        .input {
+          max-width: 50%;
+        }
+
+      }
+      display: block;
+      .input{
+        max-width: 100%;
+      }
+
+    }
+  }
+  .form-submit-message:target{
+    display: block;
+  }
+  .form-submit-message{
+    display: none;
+  }
+}

@@ -1,58 +1,77 @@
+const sendFormToAN = function() {
+  if ($('#action-network-opt-in').is(":checked")){
+    var email_subbed = "subscribed"
+  }else{
+    var email_subbed = null
+  }
+  console.log(email_subbed)
+  var formBody = {
+    "person" : {
+      "given_name" : $('#action-network-form-first').val(),
+      "family_name" : $('#action-network-form-last').val(),
+      "postal_addresses" : [
+        {
+          "postal_code" : $('#action-network-form-post_code').val(),
+          "country" : $('#action-network-form-country').val()
+        }
+      ],
+      "email_addresses" : [
+        {
+          "address" : $('#action-network-form-email').val()
+        }
+      ],
+      "custom_fields":{
+        '':''
+      }
+    },
+    "triggers": {
+      "autoresponse": {
+        "enabled": true
+      }
+    },
+    "custom_fields":{},
+    "add_tags": [
+      "write_to_councillor"
+    ]
+  }
+  if ($('#action-network-opt-in').is(":checked")){
+    formBody["person"]["email_addresses"][0]['status'] = "subscribed";
+    formBody["person"]['custom_fields']['subscribed'] = true
+  }else{
+    // formBody["person"]["email_addresses"][0]['status'] = "unsubscribed";
+    formBody["person"]['custom_fields']['subscribed'] = false;
+  }
+  console.log(formBody);
+  return formBody;
+}
+const afterFormSubmit = function(data, textStatus, jqXHR) {
+  console.log('done');
+  console.log(data);
+
+  $('#success').html('<p class="success">You\'re in!</p>');
+  var procede = window.confirm(`We are about to redirect you to WriteToThem, where you can write to one of your representatives.`);
+  if (procede){
+    window.open(`https://writetothem.com/who?pc=${$('#action-network-form-post_code').val()}`, 'name');
+  }
+  // Reset fields
+  $(':input','#action-network-form')
+    .not(':button, :submit, :reset, :hidden')
+    .val('')
+    .prop('checked', false)
+    .prop('selected', false);
+}
+
+const anSubmitFailed = function(jqXHR, textStatus, errorThrown) {
+  console.log('fail');
+  $('#success').html('<p class="fail">Sorry, that didn\'t work.</p>');
+}
+
 $(document).ready(function() {
   $('#action-network-form').osdi({
     endpoint: "https://actionnetwork.org/api/v2/petitions/79303a9c-d737-4eb9-ab65-93e8a2eb421e/signatures",
-    body: function() {
-      if ($('#action-network-opt-in').is(":checked")){
-        var email_subbed = "subscribed"
-      }else{
-        var email_subbed = null
-      }
-      console.log(email_subbed)
-      return {
-          "person" : {
-            "given_name" : $('#action-network-form-first').val(),
-            "family_name" : $('#action-network-form-last').val(),
-            "postal_addresses" : [
-              {
-                "postal_code" : $('#action-network-form-post_code').val(),
-                "country" : $('#action-network-form-country').val()
-              }
-            ],
-            "email_addresses" : [
-              {
-                "address" : $('#action-network-form-email').val(),
-                "status" : "subscribed"
-              }
-            ],
-
-          },
-          "triggers": {
-            "autoresponse": {
-              "enabled": true
-            }
-          },
-          "add_tags": [
-            "write_to_councillor"
-          ]
-      }
-    },
-    done: function(data, textStatus, jqXHR) {
-      console.log('done');
-      console.log(data);
-      
-      $('#success').html('<p class="success">You\'re in!</p>');
-      window.open(`https://writetothem.com/who?pc=${$('#action-network-form-post_code').val()}`, 'name');
-        // Reset fields
-      $(':input','#action-network-form')
-        .not(':button, :submit, :reset, :hidden')
-        .val('')
-        .prop('checked', false)
-        .prop('selected', false);
-    },
-    fail: function(jqXHR, textStatus, errorThrown) {
-      console.log('fail');
-      $('#success').html('<p class="fail">Sorry, that didn\'t work.</p>');
-    },
+    body: sendFormToAN,
+    done: afterFormSubmit,
+    fail: anSubmitFailed,
     always: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
       console.log('always');
     }
