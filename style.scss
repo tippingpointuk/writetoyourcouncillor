@@ -51,6 +51,7 @@ input[type="submit"], button{
 }
 form {
   font-family: $base-font-stack;
+  width: 95%;
   // font-size: $base-font-size * 0.8;
   input,select{
     border-style:solid;

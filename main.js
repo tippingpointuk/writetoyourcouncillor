@@ -20,23 +20,21 @@ const sendFormToAN = function() {
           "address" : $('#action-network-form-email').val()
         }
       ],
-      "custom_fields":{
-        '':''
-      }
+      "custom_fields":{}
     },
     "triggers": {
       "autoresponse": {
         "enabled": true
       }
     },
-    "custom_fields":{},
+
     "add_tags": [
       "write_to_councillor"
     ]
   }
   if ($('#action-network-opt-in').is(":checked")){
     formBody["person"]["email_addresses"][0]['status'] = "subscribed";
-    formBody["person"]['custom_fields']['subscribed'] = true
+    formBody["person"]['custom_fields']['subscribed'] = "subscribed";
   }else{
     // formBody["person"]["email_addresses"][0]['status'] = "unsubscribed";
     formBody["person"]['custom_fields']['subscribed'] = false;
@@ -49,7 +47,18 @@ const afterFormSubmit = function(data, textStatus, jqXHR) {
   console.log(data);
 
   $('#success').html('<p class="success">You\'re in!</p>');
-  var procede = window.confirm(`We are about to redirect you to WriteToThem, where you can write to one of your representatives.`);
+  var letterText = $("#letter-text").text();
+  var lettertextLineList = letterText.split("\n")
+  for (var i in lettertextLineList){
+    lettertextLineList[i] = lettertextLineList[i].trim();
+  }
+  var letterText = lettertextLineList.join('\n\n')
+  navigator.clipboard.writeText(letterText);
+  var procede = window.confirm(
+    `We are about to redirect you to WriteToThem, where you can write to one of your representatives.
+
+    The letter text is copied to your clipboard.
+    `);
   if (procede){
     window.open(`https://writetothem.com/who?pc=${$('#action-network-form-post_code').val()}`, 'name');
   }
@@ -77,3 +86,9 @@ $(document).ready(function() {
     }
   });
 });
+
+$("#action-network-form").keyup(function(e) {
+  $("#first-name-in-letter").html($('#action-network-form-first').val());
+  $("#last-name-in-letter").html($('#action-network-form-last').val());
+  $("#post-code-in-letter").html($('#action-network-form-post_code').val());
+})
