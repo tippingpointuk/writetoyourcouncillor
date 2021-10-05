@@ -53,13 +53,6 @@ const afterFormSubmit = function(data, textStatus, jqXHR) {
   console.log(data);
 
   $('#success').html('<p class="success">You\'re in!</p>');
-  var letterText = $("#letter-text").text();
-  var lettertextLineList = letterText.split("\n")
-  for (var i in lettertextLineList){
-    lettertextLineList[i] = lettertextLineList[i].trim();
-  }
-  var letterText = lettertextLineList.join('\n\n')
-  navigator.clipboard.writeText(letterText);
   var procede = window.confirm(
     `We are about to redirect you to WriteToThem, where you can write to one of your representatives.`);
   if (procede){
