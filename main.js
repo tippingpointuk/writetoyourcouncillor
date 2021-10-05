@@ -42,6 +42,12 @@ const sendFormToAN = function() {
   console.log(formBody);
   return formBody;
 }
+const copyLetterText = function(e){
+  console.log(e);
+  var letterText = $("#letter-text").text();
+  navigator.clipboard.writeText(letterText);
+}
+
 const afterFormSubmit = function(data, textStatus, jqXHR) {
   console.log('done');
   console.log(data);
@@ -55,10 +61,7 @@ const afterFormSubmit = function(data, textStatus, jqXHR) {
   var letterText = lettertextLineList.join('\n\n')
   navigator.clipboard.writeText(letterText);
   var procede = window.confirm(
-    `We are about to redirect you to WriteToThem, where you can write to one of your representatives.
-
-    The letter text is copied to your clipboard.
-    `);
+    `We are about to redirect you to WriteToThem, where you can write to one of your representatives.`);
   if (procede){
     window.open(`https://writetothem.com/who?pc=${$('#action-network-form-post_code').val()}`, 'name');
   }
@@ -92,3 +95,5 @@ $("#action-network-form").keyup(function(e) {
   $("#last-name-in-letter").html($('#action-network-form-last').val());
   $("#post-code-in-letter").html($('#action-network-form-post_code').val());
 })
+
+$("#copy-letter-text").on("click",copyLetterText)
